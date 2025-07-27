@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4 mt-3 left top">
+      <div class="card-body">
+        <h1>{% block title %} 🚀 {{ object.title }} {% endblock title %}</h1>
+        <p class="text-muted">
+          👨‍💻 Por {{ object.author }} | 📅 Criado em {{
+          object.created_on|date:"d/m/Y" }} {% if object.updated_on !=
+          object.created_on %} | ✏️ Atualizado em {{
+          object.updated_on|date:"d/m/Y" }} {% endif %}
+        </p>
+
+        <div class="mb-4">
+          <h3>📝 Descrição do Projeto</h3>
+          <p class="card-text">{{ object.description }}</p>
+        </div>
+
+        {% if object.technologies %}
+        <div class="mb-4">
+          <h4>🛠️ Tecnologias Utilizadas</h4>
+          <p class="card-text"><strong>{{ object.technologies }}</strong></p>
+        </div>
+        {% endif %} {% if object.github_link %}
+        <div class="mb-4">
+          <h4>🔗 Links do Projeto</h4>
+          <a
+            href="{{ object.github_link }}"
+            target="_blank"
+            class="btn btn-dark"
+          >
+            📂 Ver no GitHub
+          </a>
+        </div>
+        {% endif %}
+
+        <div class="mt-4">
+          <a href="{% url 'home' %}" class="btn btn-primary"
+            >⬅️ Voltar aos Projetos</a
+          >
+        </div>
+      </div>
+    </div>
+    {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+
+{% endblock content %}
