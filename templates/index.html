@@ -1,0 +1,84 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  body {
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    background-color: #fdfdfd;
+  }
+
+  .head_text {
+    color: white;
+  }
+
+  .card {
+    box-shadow: 0 16px 48px #e3e7eb;
+  }
+</style>
+
+<header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h3 class="site-heading my-4 mt-3 text-white">
+            💻 Bem-vindo ao Meu Portfólio
+          </h3>
+          <p class="text-light">
+            Desenvolvedor Python especializado em Django | Veja meus projetos!
+            &nbsp
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container">
+  <div class="row">
+    <!-- Projects Section -->
+    <div class="col-md-8 mt-3 left">
+      {% for project in post_list %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">{{ project.title }}</h2>
+          <p class="card-text text-muted h6">
+            👨‍💻 {{ project.author }} | 📅 {{ project.created_on|date:"d/m/Y" }}
+          </p>
+          <p class="card-text">{{ project.description|truncatewords:30 }}</p>
+
+          {% if project.technologies %}
+          <p class="card-text">
+            <strong>🛠️ Tecnologias:</strong> {{ project.technologies }}
+          </p>
+          {% endif %}
+
+          <div class="d-flex justify-content-between">
+            <a
+              href="{% url 'post_detail' project.slug %}"
+              class="btn btn-primary"
+              >Ver Detalhes 👀</a
+            >
+            {% if project.github_link %}
+            <a
+              href="{{ project.github_link }}"
+              target="_blank"
+              class="btn btn-outline-dark"
+              >GitHub 🔗</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="card">
+        <div class="card-body text-center">
+          <h4>Nenhum projeto encontrado</h4>
+          <p class="text-muted">Ainda não há projetos publicados.</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+{%endblock%}
